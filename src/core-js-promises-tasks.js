@@ -124,7 +124,12 @@ function getAllOrNothing(promises) {
  */
 
 function getAllResult(promises) {
-  const promise = Promise.allSettled(promises);
+  const promise = Promise.allSettled(promises).then((arr) => {
+    return arr.map((elem) => {
+      if (elem.status === 'fulfilled') return elem.value;
+      return null;
+    });
+  });
 
   return promise;
 }
